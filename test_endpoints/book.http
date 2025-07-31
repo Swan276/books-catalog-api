@@ -8,6 +8,12 @@ Accept: application/json
 
 ###
 
+# Get book by id
+GET {{host}}/api/books/1
+Accept: application/json
+
+###
+
 # Insert book
 POST {{host}}/api/books/
 Content-Type: application/json
@@ -21,3 +27,30 @@ Content-Type: application/json
 }
 
 ###
+
+# Update book (whole)
+PUT {{host}}/api/books/1/
+Content-Type: application/json
+
+{
+  "isbn": "11-111-111-111-11",
+  "title": "Dune 1",
+  "description": "Only the best book ever. Let the spice flow",
+  "author": "Frank Herbert",
+  "published_date": "2025-05-25"
+}
+
+###
+
+# Update book (partial)
+PATCH {{host}}/api/books/1/
+Content-Type: application/json
+
+{
+  "description": "Updated description"
+}
+
+###
+
+# Delete book
+DELETE {{host}}/api/books/7/
