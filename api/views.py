@@ -9,6 +9,16 @@ from django.shortcuts import get_object_or_404, render
 from .models import Book
 from .serializers import BookSerializer
 
+class HealthView(APIView):
+    def get(self, request, *args, **kwargs):
+        return Response(
+            {
+                "status": "ok",
+            }
+        )
+
+health_view = HealthView.as_view()
+
 class BookView(APIView):
   """CRUD Books"""
   
