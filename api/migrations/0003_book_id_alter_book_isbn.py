@@ -10,14 +10,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="book",
-            name="id",
-            field=models.AutoField(primary_key=True, serialize=False),
-        ),
         migrations.AlterField(
             model_name="book",
             name="isbn",
             field=models.CharField(max_length=17, unique=True),
+        ),
+        migrations.AddField(
+            model_name="book",
+            name="id",
+            field=models.AutoField(primary_key=True, serialize=False),
         ),
     ]
