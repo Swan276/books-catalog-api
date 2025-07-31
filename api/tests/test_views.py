@@ -13,6 +13,8 @@ class BookViewTest(APITestCase):
       published_date="2025-07-31"
     )
     
+    assert False
+    
     url = reverse('api:books')
     response = self.client.get(url, format='json')
     assert response.status_code == status.HTTP_200_OK
