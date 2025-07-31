@@ -1,0 +1,23 @@
+@hostname=localhost
+@port=8000
+@host=http://{{hostname}}:{{port}}
+
+# Get all books
+GET {{host}}/api/books
+Accept: application/json
+
+###
+
+# Insert book
+POST {{host}}/api/books/
+Content-Type: application/json
+
+{
+    "isbn": "44-444-444-444-44",
+    "title": "Dummy Book",
+    "description": "This is a dummy description",
+    "author": "Swan",
+    "published_date": "2025-07-31"
+}
+
+###
