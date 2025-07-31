@@ -24,6 +24,8 @@ class BookViewTest(APITestCase):
     assert returned_book["author"] == book.author
     assert returned_book["published_date"] == book.published_date
     
+    assert False
+    
   def test_post_books(self):
     book = {
       "isbn": "11-111-111-111-11",
