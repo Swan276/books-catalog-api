@@ -357,3 +357,8 @@ Go to http://localhost:8081/argocd and will see login page
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
 
+- Connect Repository
+- Create Application
+- Update Values Files parameter to use ../envs/prod/values.yaml
+
+
