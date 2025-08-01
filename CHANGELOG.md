@@ -1,3 +1,9 @@
+## [1.4.0](https://github.com/Swan276/books-catalog-api/compare/v1.3.0...v1.4.0) (2025-08-01)
+
+### Features
+
+* helm chart image version update workflow added ([b176293](https://github.com/Swan276/books-catalog-api/commit/b176293fb341ebc5700de4015d4c1331b7ead196))
+
 ## [1.3.0](https://github.com/Swan276/books-catalog-api/compare/v1.2.0...v1.3.0) (2025-08-01)
 
 ### Features
