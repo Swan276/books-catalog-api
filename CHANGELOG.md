@@ -1,3 +1,9 @@
+## [1.3.0](https://github.com/Swan276/books-catalog-api/compare/v1.2.0...v1.3.0) (2025-08-01)
+
+### Features
+
+* argocd helm values added ([54afc66](https://github.com/Swan276/books-catalog-api/commit/54afc66958a7cb0bab684c28825170a2ad3e61cd))
+
 ## [1.2.0](https://github.com/Swan276/books-catalog-api/compare/v1.1.0...v1.2.0) (2025-08-01)
 
 ### Features
