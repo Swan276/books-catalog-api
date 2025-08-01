@@ -38,6 +38,58 @@ kubectl cluster-info
 helm install books-database oci://registry-1.docker.io/bitnamicharts/postgresql -f ./postgres-helm/values.yaml
 ```
 
+Output
+```
+postgres-helm/values.yaml 
+Pulled: registry-1.docker.io/bitnamicharts/postgresql:16.7.21
+Digest: sha256:877c4002415a7fe8fa280e4361c679534c00a2a7def039d43ff429556780a2c1
+NAME: books-database
+LAST DEPLOYED: Fri Aug  1 13:25:48 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+CHART NAME: postgresql
+CHART VERSION: 16.7.21
+APP VERSION: 17.5.0
+
+NOTICE: Starting August 28th, 2025, only a limited subset of images/charts will remain available for free. Backup will be available for some time at the 'Bitnami Legacy' repository. More info at https://github.com/bitnami/containers/issues/83267
+
+** Please be patient while the chart is being deployed **
+
+PostgreSQL can be accessed via port 5432 on the following DNS names from within your cluster:
+
+    books-database-postgresql.default.svc.cluster.local - Read/Write connection
+
+To get the password for "postgres" run:
+
+    export POSTGRES_ADMIN_PASSWORD=$(kubectl get secret --namespace default books-database-postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
+
+To get the password for "books" run:
+
+    export POSTGRES_PASSWORD=$(kubectl get secret --namespace default books-database-postgresql -o jsonpath="{.data.password}" | base64 -d)
+
+To connect to your database run the following command:
+
+    kubectl run books-database-postgresql-client --rm --tty -i --restart='Never' --namespace default --image docker.io/bitnami/postgresql:17.5.0-debian-12-r20 --env="PGPASSWORD=$POSTGRES_PASSWORD" \
+      --command -- psql --host books-database-postgresql -U books -d books -p 5432
+
+    > NOTE: If you access the container using bash, make sure that you execute "/opt/bitnami/scripts/postgresql/entrypoint.sh /bin/bash" in order to avoid the error "psql: local user with ID 1001} does not exist"
+
+To connect to your database from outside the cluster execute the following commands:
+
+    kubectl port-forward --namespace default svc/books-database-postgresql 5432:5432 &
+    PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U books -d books -p 5432
+
+WARNING: The configured password will be ignored on new installation in case when previous PostgreSQL release was deleted through the helm command. In that case, old PVC will have an old password, and setting it through helm won't take effect. Deleting persistent volumes (PVs) will solve the issue.
+
+WARNING: There are "resources" sections in the chart not set. Using "resourcesPreset" is not recommended for production. For production installations, please set the following values according to your workload needs:
+  - primary.resources
+  - readReplicas.resources
++info https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+```
+
 ```
 kubectl get secrets books-database-postgresql -o yaml
 ```
@@ -65,4 +117,21 @@ metadata:
   resourceVersion: "816"
   uid: b5dfb85e-32bc-489b-9e40-e941f3af1001
 type: Opaque
+```
+
+Testing postgres
+```
+kubectl run books-database-postgresql-client --rm --tty -i --restart='Never' --namespace default --image docker.io/bitnami/postgresql:17.5.0-debian-12-r20 --env="PGPASSWORD=books" \
+      --command -- psql --host books-database-postgresql -U books -d books -p 5432
+```
+
+No tables as migration is not run yet.
+```
+books=> SELECT *
+books-> FROM pg_catalog.pg_tables
+books-> WHERE schemaname != 'pg_catalog' AND
+books->     schemaname != 'information_schema';
+ schemaname | tablename | tableowner | tablespace | hasindexes | hasrules | hastriggers | rowsecurity 
+------------+-----------+------------+------------+------------+----------+-------------+-------------
+(0 rows)
 ```
