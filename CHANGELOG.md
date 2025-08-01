@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/Swan276/books-catalog-api/compare/v1.0.0...v1.1.0) (2025-08-01)
+
+### Features
+
+* get details, put, patch, delete endpoints added ([eb35fba](https://github.com/Swan276/books-catalog-api/commit/eb35fba05dfd9400e017418cd40001908c376abc))
+* health check added ([c7bbe8a](https://github.com/Swan276/books-catalog-api/commit/c7bbe8aa0128568c91816e4cee63cc8d7507fa74))
+
 ## 1.0.0 (2025-07-31)
 
 ### Features
