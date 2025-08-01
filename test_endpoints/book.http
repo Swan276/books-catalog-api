@@ -1,6 +1,12 @@
 @hostname=localhost
-@port=8000
+# local testing port
+# @port=8000
+# exposed service port on kubernetes
+@port=8081 
 @host=http://{{hostname}}:{{port}}
+
+# Health check
+GET {{host}}/api/
 
 # Get all books
 GET {{host}}/api/books
@@ -9,7 +15,7 @@ Accept: application/json
 ###
 
 # Get book by id
-GET {{host}}/api/books/1
+GET {{host}}/api/books/2
 Accept: application/json
 
 ###
@@ -29,7 +35,7 @@ Content-Type: application/json
 ###
 
 # Update book (whole)
-PUT {{host}}/api/books/1/
+PUT {{host}}/api/books/2/
 Content-Type: application/json
 
 {
@@ -43,7 +49,7 @@ Content-Type: application/json
 ###
 
 # Update book (partial)
-PATCH {{host}}/api/books/1/
+PATCH {{host}}/api/books/2/
 Content-Type: application/json
 
 {
@@ -53,4 +59,4 @@ Content-Type: application/json
 ###
 
 # Delete book
-DELETE {{host}}/api/books/7/
+DELETE {{host}}/api/books/1/
