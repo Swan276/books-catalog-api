@@ -1,3 +1,14 @@
+## [1.2.0](https://github.com/Swan276/books-catalog-api/compare/v1.1.0...v1.2.0) (2025-08-01)
+
+### Features
+
+* book-catalog helm chart added & migration job added ([3ceca21](https://github.com/Swan276/books-catalog-api/commit/3ceca216128c40d48bbae3bf5bd73bc89d6fd44d))
+* postgres helm chart added ([97b22db](https://github.com/Swan276/books-catalog-api/commit/97b22dbbbc4fa57f312aae276515fb74c346ae0e))
+
+### Bug Fixes
+
+* browsable api renderer removed on released versions ([1932a20](https://github.com/Swan276/books-catalog-api/commit/1932a20058d7ad8f27a43d1346d5ef9f8b517df2))
+
 ## [1.1.0](https://github.com/Swan276/books-catalog-api/compare/v1.0.0...v1.1.0) (2025-08-01)
 
 ### Features
