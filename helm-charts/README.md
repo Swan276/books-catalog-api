@@ -255,3 +255,105 @@ books->     schemaname != 'information_schema';
  public     | django_session             | books      |            | t          | f        | f           | f
 (11 rows)
 ```
+
+### Pods Liveness check
+```sh
+kubectl describe pod/<pod-name>
+```
+Output
+```
+Name:             books-api-book-catalog-chart-79c65bc767-9nfk6
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             k3d-books-cluster-server-0/172.18.0.3
+Start Time:       Fri, 01 Aug 2025 21:14:18 +0100
+Labels:           app.kubernetes.io/instance=books-api
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=book-catalog-chart
+                  app.kubernetes.io/version=1.16.0
+                  helm.sh/chart=book-catalog-chart-0.1.0
+                  pod-template-hash=79c65bc767
+Annotations:      <none>
+Status:           Running
+IP:               10.42.0.41
+IPs:
+  IP:           10.42.0.41
+Controlled By:  ReplicaSet/books-api-book-catalog-chart-79c65bc767
+Containers:
+  book-catalog-chart:
+    Container ID:   containerd://2c412ec1bf49d956e84ea4885a214fa2a5256ce8b4858096b62e8c8a16f8c108
+    Image:          ghcr.io/swan276/books-catalog-api:1.2.0
+    Image ID:       ghcr.io/swan276/books-catalog-api@sha256:162b719cad361be70322526169c9ed9ec0541bff32629168ec8aaf32335744a7
+    Port:           8000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Fri, 01 Aug 2025 21:14:20 +0100
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  256Mi
+    Requests:
+      cpu:     100m
+      memory:  128Mi
+    Liveness:  http-get http://:http/api/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment Variables from:
+      books-api-book-catalog-chart-envs  ConfigMap  Optional: false
+    Environment:
+      DATABASE_PASSWORD:  <set to the key 'password' in secret 'books-database-postgresql'>  Optional: false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-lnbwk (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-lnbwk:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  9m25s  default-scheduler  Successfully assigned default/books-api-book-catalog-chart-79c65bc767-9nfk6 to k3d-books-cluster-server-0
+  Normal  Pulling    9m25s  kubelet            Pulling image "ghcr.io/swan276/books-catalog-api:1.2.0"
+  Normal  Pulled     9m25s  kubelet            Successfully pulled image "ghcr.io/swan276/books-catalog-api:1.2.0" in 876ms (876ms including waiting). Image size: 80854560 bytes.
+  Normal  Created    9m25s  kubelet            Created container book-catalog-chart
+```
+Can see success in liveness section
+
+## Setup ArgoCD
+
+### Adding argo helm repo
+```sh
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+```
+
+### Create namespace for argocd to deploy in its own
+```sh
+kubectl create namespace argocd
+```
+
+### Helm install argocd in its own namespace
+```sh
+helm -n argocd install argocd argo/argo-cd -f ./argocd-helm/values.yaml
+```
+
+Go to http://localhost:8081/argocd and will see login page
+
+### Get password for argocd
+```sh
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+
