@@ -1,3 +1,10 @@
+## [1.5.0](https://github.com/Swan276/books-catalog-api/compare/v1.4.0...v1.5.0) (2025-08-07)
+
+### Features
+
+* logging for api requests & responses added ([5aad069](https://github.com/Swan276/books-catalog-api/commit/5aad0694289c7b217725f781d8903ff1a29cb9b3))
+* traceable error logs and internal error response added ([4755057](https://github.com/Swan276/books-catalog-api/commit/4755057ea65298de31590e2c3ced17a79dc74b66))
+
 ## [1.4.0](https://github.com/Swan276/books-catalog-api/compare/v1.3.0...v1.4.0) (2025-08-01)
 
 ### Features
