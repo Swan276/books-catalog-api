@@ -11,13 +11,13 @@ GET {{host}}/api/
 ###
 
 # Get all books
-GET {{host}}/api/books
+GET {{host}}/api/books/
 Accept: application/json
 
 ###
 
 # Get book by id
-GET {{host}}/api/books/2
+GET {{host}}/api/books/2/
 Accept: application/json
 
 ###

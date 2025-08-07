@@ -27,6 +27,7 @@ class RequestResponseLoggingMiddleware:
 
         log_data = {
             "timestamp": request_time.isoformat(),
+            "correlation_id": getattr(request, 'correlation_id', None),
             "method": request.method,
             "path": request.get_full_path(),
             "status_code": response.status_code,
