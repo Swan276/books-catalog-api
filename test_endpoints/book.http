@@ -1,12 +1,14 @@
 @hostname=localhost
 # local testing port
-# @port=8000
+@port=8000
 # exposed service port on kubernetes
-@port=8081 
+# @port=8081 
 @host=http://{{hostname}}:{{port}}
 
 # Health check
 GET {{host}}/api/
+
+###
 
 # Get all books
 GET {{host}}/api/books
