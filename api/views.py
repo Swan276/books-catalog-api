@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 
 from .models import Book
 from .serializers import BookSerializer
-from .handle_internal_error import log_internal_error, return_internal_error_response
+from .handle_internal_error import log_internal_error, INTERNAL_SERVER_ERROR
 
 class HealthView(APIView):
     def get(self, request, *args, **kwargs):
@@ -31,7 +31,7 @@ class BookView(APIView):
       return Response(serializer.data, status=status.HTTP_200_OK)  
     except Exception as e:
       log_internal_error(request, e)
-      return return_internal_error_response()
+      return INTERNAL_SERVER_ERROR
   
   def post(self, request, *args, **kwargs):
     """Insert a book"""
@@ -49,7 +49,7 @@ class BookView(APIView):
       return Response(serializer.data, status=status.HTTP_201_CREATED)
     except Exception as e:
       log_internal_error(request, e)
-      return return_internal_error_response()
+      return INTERNAL_SERVER_ERROR
   
 book_view = BookView.as_view()
 
@@ -73,7 +73,7 @@ class BookDetailView(APIView):
       }, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
       log_internal_error(request, e)
-      return return_internal_error_response()
+      return INTERNAL_SERVER_ERROR
   
   def put(self, request, id, *args, **kwargs):
     try:
@@ -95,7 +95,7 @@ class BookDetailView(APIView):
       }, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
       log_internal_error(request, e)
-      return return_internal_error_response()
+      return INTERNAL_SERVER_ERROR
   
   def patch(self, request, id, *args, **kwargs):
     try:
@@ -117,7 +117,7 @@ class BookDetailView(APIView):
       }, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
       log_internal_error(request, e)
-      return return_internal_error_response()
+      return INTERNAL_SERVER_ERROR
 
   def delete(self, request, id, *args, **kwargs):
     try:
@@ -135,6 +135,6 @@ class BookDetailView(APIView):
       }, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
       log_internal_error(request, e)
-      return return_internal_error_response()
+      return INTERNAL_SERVER_ERROR
   
 book_detail_view = BookDetailView.as_view()

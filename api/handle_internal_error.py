@@ -22,7 +22,6 @@ def log_internal_error(request, e):
 
   return
 
-def return_internal_error_response():
-  return Response({
+INTERNAL_SERVER_ERROR = Response({
     "error": "Internal Server Error",
   }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
