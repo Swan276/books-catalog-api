@@ -361,4 +361,30 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 - Create Application
 - Update Values Files parameter to use ../envs/prod/values.yaml
 
+## Setting up Loki Stack for traceable logs
 
+### Adding grafana helm repo
+```sh
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+```
+
+### Creating namespace for loki stack
+```sh
+kubectl create namespace loki-stack
+```
+
+### Deploying loki stack
+```sh
+helm upgrade --install loki-stack grafana/loki-stack --namespace=loki-stack -f ./loki-stack-helm/values.yaml
+```
+
+### Get password for grafana ui
+```sh
+kubectl get secret --namespace loki-stack loki-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+```
+
+### Portforward to access grafana ui
+```sh
+kubectl port-forward --namespace loki-stack service/loki-stack-grafana 3000:80
+```
