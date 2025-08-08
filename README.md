@@ -1,4 +1,5 @@
 # Books Catalog Api
+![Architectural Diagram](./diagrams/architecture.png)
 ## Project Overview
 Books Catalog API is a Django REST service for managing books via simple CRUD endpoints. It uses SQLite for local development and PostgreSQL in production, with structured request/response and error logging with correlation IDs to be searchable in Loki-Stack with Grafana. It is setup to deploy to local Kubernetes cluster with Helm. CI/CD pipeline is setup using Github action on pull request, and push on main branch to run tests, check migrations, build docker images with semantic release to push to ghcr registry and continuous deployment using ArgoCD.
 
