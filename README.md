@@ -1,5 +1,5 @@
 # Books Catalog Api
-![Architectural Diagram](./diagrams/architecture.png)
+![Architectural Diagram](./project-report/architecture.png)
 ## Project Overview
 Books Catalog API is a Django REST service for managing books via simple CRUD endpoints. It uses SQLite for local development and PostgreSQL in production, with structured request/response and error logging with correlation IDs to be searchable in Loki-Stack with Grafana. It is setup to deploy to local Kubernetes cluster with Helm. CI/CD pipeline is setup using Github action on pull request, and push on main branch to run tests, check migrations, build docker images with semantic release to push to ghcr registry and continuous deployment using ArgoCD.
 
@@ -140,10 +140,10 @@ Pipeline (GitHub Actions)
 ## Kubernetes and Helm Setup
 #### Charts
 - **Book Catalog chart:** `helm-charts/book-catalog-chart`
-  - Deployment `templates/deployment.yaml`: Deploying 3 replicas with container on `8000` (defined as `http`). Image is pulled from the repository defined in `values.yaml` file using image pull secret `ghcr-token` created as kubernetes secret resource. Containers are given resources defined in `values.yaml` file.
+  - Deployment `templates/deployment.yaml`: Deploying 3 container replicas on port `8000` (defined as `http`). Image is pulled from the repository defined in `values.yaml` file using image pull secret `ghcr-token` created as kubernetes secret resource. Containers are given resources defined in `values.yaml` file.
   - Service `templates/service.yaml`: ClusterIP Service on port `80` targeting container port `http` defined in deployment.
-  - Ingress `templates/ingress.yaml`: expose and routes `/api` path to the Service on port 80.
-  - Migartion Job `templates/migration-job.yaml`: pre-install/pre-upgrade Job to run database migration.
+  - Ingress `templates/ingress.yaml`: route external traffic containing prefix /api to the Service on port 80.
+  - Migration Job `templates/migration-job.yaml`: pre-install/pre-upgrade Job to run database migration.
   - Config Map `templates/configmap.yaml`: contains environment variables.
 - **Postgres chart:** `helm-charts/postgres-helm`
 - **ArgoCD chart:** `helm-charts/argocd-helm`

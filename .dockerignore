@@ -33,6 +33,6 @@ db.sqlite3
 media/
 staticfiles/
 
-project-images/
+project-report/
 helm-charts/
 docker-compose.yaml
